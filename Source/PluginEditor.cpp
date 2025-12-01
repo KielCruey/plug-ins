@@ -1,15 +1,6 @@
-/*
-  ==============================================================================
-
-    This file contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
-*/
-
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-//==============================================================================
 DelayAudioProcessorEditor::DelayAudioProcessorEditor (DelayAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
@@ -22,7 +13,6 @@ DelayAudioProcessorEditor::~DelayAudioProcessorEditor()
 {
 }
 
-//==============================================================================
 void DelayAudioProcessorEditor::paint (juce::Graphics& g)
 {
     g.fillAll(juce::Colours::blue);

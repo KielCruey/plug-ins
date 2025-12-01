@@ -6,6 +6,8 @@
               pluginDesc="Delay" cppLanguageStandard="17" pluginManufacturer="Studio Kynosis">
   <MAINGROUP id="yJjE9T" name="Delay">
     <GROUP id="{753A5CE1-5C91-E498-F4F8-13959FDAF43E}" name="Source">
+      <FILE id="EtCdc5" name="Parameters.cpp" compile="1" resource="0" file="Source/Parameters.cpp"/>
+      <FILE id="Y7CoRP" name="Parameters.h" compile="0" resource="0" file="Source/Parameters.h"/>
       <FILE id="ajSznn" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="UsvAhu" name="PluginProcessor.h" compile="0" resource="0"
