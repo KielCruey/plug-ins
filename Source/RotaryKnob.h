@@ -7,7 +7,8 @@ class RotaryKnob  : public juce::Component
 public:
     RotaryKnob(const juce::String& text,
                 juce::AudioProcessorValueTreeState& apvts,
-                const juce::ParameterID& paramterID);
+                const juce::ParameterID& paramterID,
+                bool drawFromMiddle = false);
     ~RotaryKnob() override;
 
     void resized() override;
