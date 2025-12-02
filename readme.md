@@ -1,0 +1,2 @@
+# Juce Plug-ins
+The following projects are DSP plug-in using the [Juce Framework](https://juce.com/). Juce is an open source C++ framework that supports building audio projects including stand alone applications, synthesizers, and plug-ins. The beauty of Juce allows the developer to focus on programming without worrying about the toolchains for other targets like Windows, iOS, and Linux platforms.
