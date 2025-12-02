@@ -9,20 +9,17 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor (DelayAudioProcessor& p)
     setSize (400, 300);
 }
 
-DelayAudioProcessorEditor::~DelayAudioProcessorEditor()
-{
+DelayAudioProcessorEditor::~DelayAudioProcessorEditor() {
 }
 
-void DelayAudioProcessorEditor::paint (juce::Graphics& g)
-{
+void DelayAudioProcessorEditor::paint (juce::Graphics& g) {
     g.fillAll(juce::Colours::blue);
     g.setColour(juce::Colours::white);
     g.setFont(40.0f);
     g.drawFittedText("My First Plug-in!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
-void DelayAudioProcessorEditor::resized()
-{
+void DelayAudioProcessorEditor::resized() {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 }

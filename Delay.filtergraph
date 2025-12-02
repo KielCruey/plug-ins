@@ -61,16 +61,16 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="5" x="0.505" y="0.6064356435643564" useARA="0" uiLastX_Normal="372"
+  <FILTER uid="5" x="0.62625" y="0.5792079207920792" useARA="0" uiLastX_Normal="372"
           uiLastY_Normal="17" uiopen_Normal="0" uiLastX_Generic="53" uiLastY_Generic="340"
           uiopen_Generic="0" uiLastX_Programs="289" uiLastY_Programs="418"
           uiopen_Programs="0">
     <PLUGIN name="Super Awesome Delay Plug-In" format="VST3" category="Fx"
             manufacturer="Studio Kynosis" version="1.0.0" file="C:\Program Files\Common Files\VST3\Delay.vst3\Contents\x86_64-win\Delay.vst3"
-            uniqueId="f1a6e61d" isInstrument="0" fileTime="19ace7c5361" infoUpdateTime="19ad0863e5f"
+            uniqueId="f1a6e61d" isInstrument="0" fileTime="19add7ea4bb" infoUpdateTime="19add812c2e"
             numInputs="2" numOutputs="2" isShell="0" hasARAExtension="0"
             uid="e9531ca7"/>
-    <STATE>191.VMjLgXK....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9XCLt3hKt3hKt3hKt3hYRUUSTEETIckVwTjQisVTTgkdEYjKAQjYPQSPWgUdMcjKAQjct3hdA4hKt3hKt3hKtnTUv.UQAslXuk0UXoWUFE0YQcEV77RRC8Vav8lak4Fc9vyKVMEUy.Ea0cVZtMEcgQWY9..</STATE>
+    <STATE>435.VMjLgnZ....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9HCMx3hUMoFSmomRt3hKt7zJlcUXxEDZisVRxH1a3vVX3fjTLQmKogjYTwVXogiQY8FMwjENHIUUTkEUKMCR38TNtHzSPUDahcFLVkkdUwlX4QyPOAUQpQUPvPDRuEkUOgFTVkkbEYEYTslUgsVRBgTLEYTXvTkUOgFQCwjcyHDS14xPLYmXo0DdpkGSz.0TMg1Mn8zMtTETRUDUSYlZFkENHgWVmsFagglKnM1Y2Y0XqASZHY2LBwDZ2f1S23RUPIUQTMkYpYTV3fjTg81YsgjYXcEVxU0UYgCRR0jcyHDSncCZOcyMBQ0YIcEVyUkQisVRxHVNt3hKt3hKt3hKt3hKtQUUCUEQTg2ZrM1YQcUVDUjQicVPP4RPHQEY1UTLhkWPP4RPL4hKi4hKt3hKt3hKtXlTU0DUQAURWoULEYzXqEEUXoWQFwyKIMzasA2atUlaz4COuX0TTMCTrU2Yo41TzEFck4C.</STATE>
     <LAYOUT>
       <INPUTS>
         <BUS index="0" layout="L R"/>
@@ -80,11 +80,11 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="6" x="0.505" y="0.3836633663366337" useARA="0" uiLastX_Normal="506"
+  <FILTER uid="6" x="0.63" y="0.3811881188118812" useARA="0" uiLastX_Normal="506"
           uiLastY_Normal="514" uiopen_Normal="0">
     <PLUGIN name="AudioFilePlayer" format="VST3" category="Fx" manufacturer="Matkat Music LLC"
             version="1.0.0" file="C:\Program Files\Common Files\VST3\AudioFilePlayer.vst3"
-            uniqueId="79fe81c" isInstrument="0" fileTime="19ace4a1100" infoUpdateTime="19ad0863e5f"
+            uniqueId="79fe81c" isInstrument="0" fileTime="19ace4a1100" infoUpdateTime="19add812c2e"
             numInputs="2" numOutputs="2" isShell="0" hasARAExtension="0"
             uid="e95d02c7"/>
     <STATE>298.VMjLgDR....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9DyL43BTIISX1UEaho2ZVkUdAAkKAwDUigWRWkEcQ0VTucmUY4BQ1wTQLolSh0Tahk1cqI1ZEYjXqkzUKgWUrElZUwlX4cWQRc1cFE1Z2Y0XvUjQZYldBgzRqYUVxEDdPgWUWkEMzHUX10zPt3hKt3hKt3hKt3hKtnTUv.UQAslXuk0UXoWUFE0YQcEVtPDTtHzZGI1YMIiXtPDTtLjKPcjKt3hKt3hKt3haTU0PUQDU3sFaicVTWkEQEYzXmEDOujzPu0Fbu4VYtQmO77hUSQ0LPwVcmklaSQWXzUlO..</STATE>
@@ -101,10 +101,26 @@
           uiLastY_Normal="406" uiopen_Normal="0">
     <PLUGIN name="Wave Observer" format="VST3" category="Fx|Analyzer" manufacturer="Press Play"
             version="1.7.0" file="C:\Program Files\Common Files\VST3\WaveObserver.vst3"
-            uniqueId="9c2eefb7" isInstrument="0" fileTime="18f232246c0" infoUpdateTime="19ad0863e5f"
+            uniqueId="9c2eefb7" isInstrument="0" fileTime="18f232246c0" infoUpdateTime="19add812c2e"
             numInputs="2" numOutputs="2" isShell="0" hasARAExtension="0"
             uid="31175806"/>
     <STATE>352.VMjLgbU....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9DSMx3RRjUCVtUDagQWUFElKXEVVzk0UYIGNFI1Z3TUX0EkUYUVTVMFdEYzXugCagszJCMSdzX2Ul4hKtnFYVg0azDCdqfENGU1Pg4FYmIiatU0UYszJCQSZ1fjSoYCVNoVLwDlZUYkKq4jLXc1cVk0RqLzMt3hKt3hKt3RbNcjV0MlLWIWUwj0ZzXTVCUFbisVRxH1a3vVXNMDTtbjKlMmLEw1XqkULggGLwb0b3XTVqgSQYASRWgkdqESXzM2MOkUaYwVVrkEaZIjKt3hKtvyKIMzasA2atUlaz4COIUDYoQ2Pu4Fcx8FarUlb9.iK77RREQVZzMzatQmbuwFakImO77hUSQ0LPwVcmklaSQWXzUlO..</STATE>
+    <LAYOUT>
+      <INPUTS>
+        <BUS index="0" layout="L R"/>
+      </INPUTS>
+      <OUTPUTS>
+        <BUS index="0" layout="L R"/>
+      </OUTPUTS>
+    </LAYOUT>
+  </FILTER>
+  <FILTER uid="8" x="0.8149999999999999" y="0.8836633663366337" useARA="0">
+    <PLUGIN name="SPAN" format="VST3" category="Fx|Analyzer" manufacturer="Voxengo"
+            version="3.23" file="C:\Program Files\Common Files\VST3\SPAN.vst3"
+            uniqueId="65d3dbf7" isInstrument="0" fileTime="1959f5e0d40" infoUpdateTime="19add812c2e"
+            numInputs="2" numOutputs="2" isShell="0" hasARAExtension="0"
+            uid="c2a3d69d"/>
+    <STATE>1549.VMjLgPfA...O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9DCL2biKmETahkWVhYjKt3xLtHVLtLCMUcGVvLWZhM0PEkib4EyXgolRHM2XUsjVAo0a1HUQvoWY2.UQxImYtcESAkjRUYlVKU0b3TDR1vDYrcmVSg1P2kULqMmXCgzcEgDYtX1Rv4RMBciP1ElK2XjYDIycS4xUwbTPNQlT2vzcIcGYRQGRCEEdIcTY2Hyc4bCMk4TLNUmKtXGcGgmL1LTNHUCT0kTNIUWPrsRQ2oWNGcDMIQDQZ4lL4jidgclRjUESzzTVtjlLMY1SyPFYxYGcZAkUAsjUrYlb0oTVzj1PrYTQ40FQI4VN1bFd0Q0avIUUvMmVQUSUxAUTncEVkoTR5sjYjcjaJUmTCgFbNAmRqUWSzYlbzQiZHUGV04RTxjSZ3HzPukiZuQVQQYGNzTlRVkCLJICUVImcFMkS0YUbqoUZ5EVQqLjU1s1b5wDMlYkZM4DMpc0QS8TM2ISNmISN4UiZukUULM1Q3EVcvYULxPCUZkkLi0zbxUmM0nUVxXidZkUYOczbxUWcJEVaLUEdvQ1bLcUTZ8lb2zzYRoGaE4TMKA0bgMzRlkGRzg1Xt4jYu0VaxL0JKMCbq.SVwHyUAgmMQIGTnokXho0U2.kb5ICQLYSVEc2UhgzaSc1MxzTcncDb3gzJjQGZ4DDdzPjZ48TPvrRMwfiYLoFa1LlRvrDU1bDN2EmKAozcnUzRZciTmEWNocELqDUYmMDdhUDNqHkc4HTahAUXoQlRYQkazzDaXwzJHgVa0UmVwb1LSYGZ0oDVwXiRYAUTkQURKUVLtLUPtgiZog0YCAkMDIWaPsBVTISbUAWPJgFbXMWLQU0ZOMiMhMUb0TWL3r1Zv3TY1kFY1cDYqPWZYMjap4hVB0jUPYGVvkjPY4hLwQEcYwTPxXzRNUFcwDzQWwlVFkDMyfTMO4RUMIkUIo2Mv71Ptc0JyclX4jiQQQzbOcVQDcWZSgDN2YGN28zXEEFNMslYWomLWMjR4PkXw3lRvAiQzk2cZojTWUEVUsVUGImRiASP1XTStXCMZ4RLyokKwrjbPIGdU4lVCYzTBcDTogCNN4zXKYSYDAmVEAWQCYUL4gSLFoGNqn1LIEDb1cDY4HWTmIiX1kyJBg1aKgUZDUUVvfGaIYiKVgkTXIzP3rzS2UGZlQ1RtECUQkUL3w1RWIjb1s1PGslcB4ValAERPMWVRAWTrQyc4YCLFgGd4gEV3sVLxzlLqX1a1T1MggDbgIDLqoTdykGSgECdy0jZy0DbLYVRpIiUukUZJkkQyIWaikTcTgVRWoER4IyJsYFbzQEZMsjUwjWbwDjb1YFV0z1TFkmQMQWVwASaYwVTzcybqLWXggTcMImKzMSdOAWVQYVUVkEYTk0UxDCTwDiaBA2S3vVdWo0ZrwDbLkGSEckZIcDTqn0a3YSPrgyUFUCUVACbqU0XvgGbVEmbvAyRwUidqUEMTYUUjUVSqTzZqUVUMMGb3fmLHoDcI8zcy8lSDkicmIjV3kGTDIiKvEVaXAWSJ8jPls1TTYTXQsDMGozS3MkdIA0TnYEaYoVVjcSc3n0PYElMmUjME4DZN0DbQkWLCEFciU0crsRMgkCYRU2R4bDNZMDMiYERgYmKG0zR3QCS4AGZKEFYrsxMxL1JvMmMvXDdwLCZlEyS3rxQwvDcLkGS4kGdZcTVgEmUP0lTjMmdSYFaxoUR4gTd2X2cy0jZ0gDVmcTN2fTMOklKz4DUgYERMcGSGEidy0jZy4TcJYVdSYTdBcDL1QSUJkmUwjWbxMlUOQyMow1XVU2JOkiMHESLMwDNsAENL4VR1XDaZkVVVQUczPSSUkib1IlUlQ1PqQTT33DT4bUQpszMwEycsEzR0UGaWYEYRMSdlUWZn81L4XyTOwldicldk0lZj0DaCYFd4.mTUIFQrsRZwc1RrYDOujzPu0Fbu4VYtQmO77hUSQ0LPwVcmklaSQWXzUlO..</STATE>
     <LAYOUT>
       <INPUTS>
         <BUS index="0" layout="L R"/>
@@ -118,6 +134,8 @@
   <CONNECTION srcFilter="5" srcChannel="1" dstFilter="3" dstChannel="1"/>
   <CONNECTION srcFilter="5" srcChannel="0" dstFilter="7" dstChannel="0"/>
   <CONNECTION srcFilter="5" srcChannel="1" dstFilter="7" dstChannel="1"/>
+  <CONNECTION srcFilter="5" srcChannel="0" dstFilter="8" dstChannel="0"/>
+  <CONNECTION srcFilter="5" srcChannel="1" dstFilter="8" dstChannel="1"/>
   <CONNECTION srcFilter="6" srcChannel="0" dstFilter="5" dstChannel="0"/>
   <CONNECTION srcFilter="6" srcChannel="1" dstFilter="5" dstChannel="1"/>
 </FILTERGRAPH>

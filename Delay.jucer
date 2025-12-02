@@ -6,6 +6,8 @@
               pluginDesc="Delay" cppLanguageStandard="17" pluginManufacturer="Studio Kynosis">
   <MAINGROUP id="yJjE9T" name="Delay">
     <GROUP id="{753A5CE1-5C91-E498-F4F8-13959FDAF43E}" name="Source">
+      <FILE id="k3pWzC" name="Utilities.cpp" compile="1" resource="0" file="Source/Utilities.cpp"/>
+      <FILE id="eEygvC" name="Utilities.h" compile="0" resource="0" file="Source/Utilities.h"/>
       <FILE id="EtCdc5" name="Parameters.cpp" compile="1" resource="0" file="Source/Parameters.cpp"/>
       <FILE id="Y7CoRP" name="Parameters.h" compile="0" resource="0" file="Source/Parameters.h"/>
       <FILE id="ajSznn" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -27,6 +29,7 @@
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
@@ -58,6 +61,7 @@
         <MODULEPATH id="juce_graphics" path="../../../Program Files/JUCE-8.0.10/modules"/>
         <MODULEPATH id="juce_data_structures" path="../../../Program Files/JUCE-8.0.10/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../../../Program Files/JUCE-8.0.10/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../Program Files/JUCE-8.0.10/modules"/>
       </MODULEPATHS>
     </VS2022>
     <XCODE_IPHONE targetFolder="Builds/iOS">
@@ -78,6 +82,7 @@
         <MODULEPATH id="juce_graphics" path="../../../Program Files/JUCE-8.0.10/modules"/>
         <MODULEPATH id="juce_data_structures" path="../../../Program Files/JUCE-8.0.10/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../../../Program Files/JUCE-8.0.10/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../Program Files/JUCE-8.0.10/modules"/>
       </MODULEPATHS>
     </XCODE_IPHONE>
     <XCODE_MAC targetFolder="Builds/MacOSX">
@@ -98,6 +103,7 @@
         <MODULEPATH id="juce_graphics" path="../../../Program Files/JUCE-8.0.10/modules"/>
         <MODULEPATH id="juce_data_structures" path="../../../Program Files/JUCE-8.0.10/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../../../Program Files/JUCE-8.0.10/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../Program Files/JUCE-8.0.10/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
