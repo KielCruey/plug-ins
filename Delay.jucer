@@ -6,6 +6,8 @@
               pluginDesc="Delay" cppLanguageStandard="17" pluginManufacturer="Studio Kynosis">
   <MAINGROUP id="yJjE9T" name="Delay">
     <GROUP id="{753A5CE1-5C91-E498-F4F8-13959FDAF43E}" name="Source">
+      <FILE id="Vir547" name="RotaryKnob.cpp" compile="1" resource="0" file="Source/RotaryKnob.cpp"/>
+      <FILE id="nS6JDn" name="RotaryKnob.h" compile="0" resource="0" file="Source/RotaryKnob.h"/>
       <FILE id="k3pWzC" name="Utilities.cpp" compile="1" resource="0" file="Source/Utilities.cpp"/>
       <FILE id="eEygvC" name="Utilities.h" compile="0" resource="0" file="Source/Utilities.h"/>
       <FILE id="EtCdc5" name="Parameters.cpp" compile="1" resource="0" file="Source/Parameters.cpp"/>

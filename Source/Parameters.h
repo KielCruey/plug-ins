@@ -2,8 +2,6 @@
 
 #include <JuceHeader.h> // can use namespace juce::
 
-
-
 const juce::ParameterID gainParamID{ "gain", 1 };
 const juce::ParameterID delayTimeParamID{ "delayTime", 1 };
 const juce::ParameterID mixParamID{ "mix", 1 };
