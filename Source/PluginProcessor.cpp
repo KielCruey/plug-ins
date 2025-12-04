@@ -3,8 +3,10 @@
 #include "ProtectYourEars.h"
 
 DelayAudioProcessor::DelayAudioProcessor()
-     : AudioProcessor (BusesProperties().withInput("Input", juce::AudioChannelSet::stereo(), true)
-                                    .withOutput ("Output", juce::AudioChannelSet::stereo(), true)),
+     : AudioProcessor (
+         BusesProperties()
+            .withInput("Input", juce::AudioChannelSet::stereo(), true)
+            .withOutput ("Output", juce::AudioChannelSet::stereo(), true)),
     params(apvts)
 { }
 
@@ -91,30 +93,19 @@ void DelayAudioProcessor::releaseResources() {
     // spare memory, etc.
 }
 
-#ifndef JucePlugin_PreferredChannelConfigurations
 bool DelayAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const {
-  #if JucePlugin_IsMidiEffect
-    juce::ignoreUnused (layouts);
-    return true;
-  #else
-    // This is the place where you check if the layout is supported.
-    // In this template code we only support mono or stereo.
-    // Some plugin hosts, such as certain GarageBand versions, will only
-    // load plugins that support stereo bus layouts.
-    if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
-     && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
-        return false;
+    const auto mono = juce::AudioChannelSet::mono();
+    const auto stereo = juce::AudioChannelSet::stereo();
+    const auto mainIn = layouts.getMainInputChannelSet();
+    const auto mainOut = layouts.getMainOutputChannelSet();
 
-    // This checks if the input layout matches the output layout
-   #if ! JucePlugin_IsSynth
-    if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
-        return false;
-   #endif
+    // checking all possible valid layouts
+    if (mainIn == mono && mainOut == mono) { return true; }
+    if (mainIn == mono && mainOut == stereo) { return true; }
+    if (mainIn == stereo && mainOut == stereo) { return true; }
 
-    return true;
-  #endif
+    return false;
 }
-#endif
 
 void DelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages) {
     juce::ScopedNoDenormals noDenormals;
@@ -130,40 +121,77 @@ void DelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     // delay line current delay calculations
     float sampleRate = float(getSampleRate());
 
-    float* channelDataL = buffer.getWritePointer(channel::left);
-    float* channelDataR = buffer.getWritePointer(channel::right);
+    auto mainInput = getBusBuffer(buffer, true, 0);
+    auto mainInputChannels = mainInput.getNumChannels();
+    auto isMainInputStereo = mainInputChannels > 1;
+    const float* inputDataL = mainInput.getReadPointer(channel::left);
+    const float* inputDataR = mainInput.getReadPointer(isMainInputStereo ? channel::left : channel::right);
 
-    for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
-        params.smoothen();
+    auto mainOutput = getBusBuffer(buffer, false, 0);
+    auto mainOutputChannels = mainOutput.getNumChannels();
+    auto isMainOutputStereo = mainOutputChannels > 1;
+    float* outputDataL = mainOutput.getWritePointer(channel::right);
+    float* outputDataR = mainOutput.getWritePointer(isMainOutputStereo ? channel::left : channel::right);
+    
+    
 
-        float delayInSamples = params.delayTime / 1000.0f * sampleRate;
-        delayLine.setDelay(delayInSamples);
+    if (isMainOutputStereo) {
+        for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
+            params.smoothen();
 
-        // reading input samples --  x[n]
-        float dryL = channelDataL[sample];
-        float dryR = channelDataR[sample];
+            float delayInSamples = params.delayTime / 1000.0f * sampleRate;
+            delayLine.setDelay(delayInSamples);
 
-        // insert into delay line -- z^(-N)
-        delayLine.pushSample(channel::left, dryL + feedbackL);
-        delayLine.pushSample(channel::right, dryR + feedbackR);
+            // reading input samples --  x[n]
+            float dryL = inputDataL[sample];
+            float dryR = inputDataR[sample];
 
-        float wetL = delayLine.popSample(channel::left);
-        float wetR = delayLine.popSample(channel::right);
+            float mono = (dryL + dryR) * 0.5f; // convert stereo to mono
 
-        // multi-tap delay
-        //wetL += delayLine.popSample(0, delayInSamples * 2.0f, false) * 0.7f;
-        //wetR += delayLine.popSample(1, delayInSamples * 2.0f, false) * 0.7f;
+            // insert into delay line -- z^(-N)
+            //delayLine.pushSample(channel::left, dryL + feedbackL);
+            //delayLine.pushSample(channel::right, dryR + feedbackR);
 
-        feedbackL = wetL * params.feedback;
-        feedbackR = wetR * params.feedback;
+            // insert into delay line -- ping pong delay -- z^(-N)
+            delayLine.pushSample(channel::left, mono * params.panL + feedbackR);
+            delayLine.pushSample(channel::right, mono * params.panR + feedbackL);
 
-        float mixL = dryL + wetL * params.mix;
-        float mixR = dryR + wetR * params.mix;
+            float wetL = delayLine.popSample(channel::left);
+            float wetR = delayLine.popSample(channel::right);
 
-        // output -- y[n]
-        channelDataL[sample] = mixL * params.gain;
-        channelDataR[sample] = mixR * params.gain;
+            // multi-tap delay
+            //wetL += delayLine.popSample(0, delayInSamples * 2.0f, false) * 0.7f;
+            //wetR += delayLine.popSample(1, delayInSamples * 2.0f, false) * 0.7f;
+
+            feedbackL = wetL * params.feedback;
+            feedbackR = wetR * params.feedback;
+
+            float mixL = dryL + wetL * params.mix;
+            float mixR = dryR + wetR * params.mix;
+
+            // output -- y[n]
+            outputDataL[sample] = mixL * params.gain;
+            outputDataR[sample] = mixR * params.gain;
+        }
     }
+    else { 
+        for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
+            params.smoothen();
+
+            float delayInSamples = params.delayTime / 1000.0f * sampleRate;
+            delayLine.setDelay(delayInSamples);
+
+            float dry = inputDataL[sample];
+            delayLine.pushSample(channel::left, dry + feedbackL);
+            
+            float wet = delayLine.popSample(channel::left);
+            feedbackL = wet * params.feedback;
+
+            float mix = dry + wet * params.mix;
+            outputDataL[sample] = mix * params.gain;
+        }
+    }
+
 
     #if JUCE_DEBUG
         protectYourEars(buffer); // helps with too high of an output gain/volume

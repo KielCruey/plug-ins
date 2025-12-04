@@ -5,6 +5,7 @@ The following projects are DSP plug-in using the [Juce Framework](https://juce.c
 For [Juce documentation](https://docs.juce.com/master/index.html), always referenced Juce's website.
 
 # Resources 
+## Plug-Ins
 Some of the plugs-in for developing plug-in include:
 * [Voxengo SPAN](https://www.voxengo.com/product/span/) for frequency domain analysis
 * [WaveObserver](https://pressplay-music.com/wave-observer/) for time domain analysis
@@ -13,6 +14,10 @@ Some of the plugs-in for developing plug-in include:
 * [AudioPlugInHost](https://github.com/juce-framework/JUCE) -- located in "extras" directory -- for simulating a simple, minimalistic DAW when testing plug-ins  
 * [PlugIn Doctor](https://ddmf.eu/plugindoctor/) for specialized analysis -- not a **free** tool
 * [Bertom EQ Curve Analyzer](https://bertomaudio.com/eq-curve-analyzer.html) for specialized analysis
+
+## Math
+* [Desmos 2D](https://www.desmos.com/geometry) -- 2D graphing
+* [Desmos 3D](https://www.desmos.com/3d) -- 3D graphing
 
 # Textbook(s)
 [The Complete Beginner's Guide to Audio Plug-in Development](https://github.com/TheAudioProgrammer/BeginnerBookAudioProgramming)

@@ -6,6 +6,7 @@ const juce::ParameterID gainParamID{ "gain", 1 };
 const juce::ParameterID delayTimeParamID{ "delayTime", 1 };
 const juce::ParameterID mixParamID{ "mix", 1 };
 const juce::ParameterID feedbackParamID{ "feedback", 1 };
+const juce::ParameterID stereoParamID{ "stereo", 1 };
 
 class Parameters
 {
@@ -33,6 +34,8 @@ public:
 	float delayTime = 0.0f;
 	float mix = 1.0f; // 0-1 values only
 	float feedback = 0.0f;
+	float panL = 0.0f;
+	float panR = 1.0f;
 
 private:
 	float targetDelayTime = 0.0f; // value that the one-pole filter is trying to reach
@@ -42,9 +45,11 @@ private:
 	juce::AudioParameterFloat* delayTimeParam;
 	juce::AudioParameterFloat* mixParam;
 	juce::AudioParameterFloat* feedbackParam;
+	juce::AudioParameterFloat* stereoParam;
 
 	// smoothing helps prevent audio clicks
 	juce::LinearSmoothedValue<float> gainSmoother; 
 	juce::LinearSmoothedValue<float> mixSmoother;
 	juce::LinearSmoothedValue<float> feedbackSmoother;
+	juce::LinearSmoothedValue<float> stereoSmoother;
 };
