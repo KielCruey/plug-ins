@@ -12,6 +12,8 @@
       <FILE id="SaK6vc" name="Noise.png" compile="0" resource="1" file="Source/Noise.png"/>
     </GROUP>
     <GROUP id="{753A5CE1-5C91-E498-F4F8-13959FDAF43E}" name="Source">
+      <FILE id="DShdk9" name="ProtectYourEars.h" compile="0" resource="0"
+            file="Source/ProtectYourEars.h"/>
       <FILE id="NjAVCW" name="LookAndFeel.cpp" compile="1" resource="0" file="Source/LookAndFeel.cpp"/>
       <FILE id="oQMoC0" name="LookAndFeel.h" compile="0" resource="0" file="Source/LookAndFeel.h"/>
       <FILE id="Vir547" name="RotaryKnob.cpp" compile="1" resource="0" file="Source/RotaryKnob.cpp"/>

@@ -1,5 +1,6 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "ProtectYourEars.h"
 
 DelayAudioProcessor::DelayAudioProcessor()
      : AudioProcessor (BusesProperties().withInput("Input", juce::AudioChannelSet::stereo(), true)
@@ -73,11 +74,16 @@ void DelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
     delayLine.prepare(spec);
 
     double numSamples = Parameters::maxDelayTime / 1000.0f * sampleRate;
-    int maxDelayInSamples = int(std::ceil(numSamples)); // if remainder, then round up
+    // number of samples must be twice as large to prevent the plugin from crashing
+    int maxDelayInSamples = int(std::ceil(numSamples) * 2); // if remainder, then round up
     delayLine.setMaximumDelayInSamples(maxDelayInSamples);
     delayLine.reset();
 
-    DBG(maxDelayInSamples);
+    //DBG(maxDelayInSamples);
+
+    // resets feedback
+    feedbackL = 0.0f;
+    feedbackR = 0.0f;
 }
 
 void DelayAudioProcessor::releaseResources() {
@@ -133,25 +139,35 @@ void DelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
         float delayInSamples = params.delayTime / 1000.0f * sampleRate;
         delayLine.setDelay(delayInSamples);
 
-        // reading input samples
+        // reading input samples --  x[n]
         float dryL = channelDataL[sample];
         float dryR = channelDataR[sample];
 
-        // insert in delay line
-        delayLine.pushSample(channel::left, dryL);
-        delayLine.pushSample(channel::right, dryR);
+        // insert into delay line -- z^(-N)
+        delayLine.pushSample(channel::left, dryL + feedbackL);
+        delayLine.pushSample(channel::right, dryR + feedbackR);
 
         float wetL = delayLine.popSample(channel::left);
         float wetR = delayLine.popSample(channel::right);
 
-        // blends dry/wet together for both channels -- cause no volume change if more wet for example
-        // linear interpretation with wet/dry
-        float mixL = dryL * (1.0f - params.mix) + wetL * params.mix; 
-        float mixR = dryR * (1.0f - params.mix) + wetR * params.mix;
+        // multi-tap delay
+        //wetL += delayLine.popSample(0, delayInSamples * 2.0f, false) * 0.7f;
+        //wetR += delayLine.popSample(1, delayInSamples * 2.0f, false) * 0.7f;
 
+        feedbackL = wetL * params.feedback;
+        feedbackR = wetR * params.feedback;
+
+        float mixL = dryL + wetL * params.mix;
+        float mixR = dryR + wetR * params.mix;
+
+        // output -- y[n]
         channelDataL[sample] = mixL * params.gain;
         channelDataR[sample] = mixR * params.gain;
     }
+
+    #if JUCE_DEBUG
+        protectYourEars(buffer); // helps with too high of an output gain/volume
+    #endif
 }
 
 bool DelayAudioProcessor::hasEditor() const {
@@ -167,8 +183,7 @@ void DelayAudioProcessor::getStateInformation (juce::MemoryBlock& destData) {
     copyXmlToBinary(*apvts.copyState().createXml(), destData);
 }
 
-void DelayAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
-{
+void DelayAudioProcessor::setStateInformation (const void* data, int sizeInBytes) {
     std::unique_ptr<juce::XmlElement> xml(getXmlFromBinary(data, sizeInBytes));
 
     if (xml.get() != nullptr && xml->hasTagName(apvts.state.getType()))

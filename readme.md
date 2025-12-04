@@ -11,6 +11,8 @@ Some of the plugs-in for developing plug-in include:
 * [AudioFilePlayer](https://github.com/hollance/AudioFilePlayerPlugin) for playing a real audio sample
 * [s(M)exoscope](http://armandomontanez.com/smexoscope/) for a general oscilloscope probing
 * [AudioPlugInHost](https://github.com/juce-framework/JUCE) -- located in "extras" directory -- for simulating a simple, minimalistic DAW when testing plug-ins  
+* [PlugIn Doctor](https://ddmf.eu/plugindoctor/) for specialized analysis -- not a **free** tool
+* [Bertom EQ Curve Analyzer](https://bertomaudio.com/eq-curve-analyzer.html) for specialized analysis
 
 # Textbook(s)
 [The Complete Beginner's Guide to Audio Plug-in Development](https://github.com/TheAudioProgrammer/BeginnerBookAudioProgramming)

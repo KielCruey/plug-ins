@@ -4,7 +4,7 @@
 DelayAudioProcessorEditor::DelayAudioProcessorEditor (DelayAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    // setting up UI groups
+    // setting up UI (knobs) in groups
     delayGroup.setText("Delay");
     delayGroup.setTextLabelPosition(juce::Justification::horizontallyCentred);
     delayGroup.addAndMakeVisible(delayTimeKnob); // adding delayTime to group
@@ -12,6 +12,7 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor (DelayAudioProcessor& p)
 
     feedbackGroup.setText("Feedback");
     feedbackGroup.setTextLabelPosition(juce::Justification::horizontallyCentred);
+    feedbackGroup.addAndMakeVisible(feedbackKnob);
     addAndMakeVisible(feedbackGroup);
 
     outputGroup.setText("Output");
@@ -63,7 +64,9 @@ void DelayAudioProcessorEditor::resized() {
     outputGroup.setBounds(bounds.getWidth() - 160, y, 150, height);
     feedbackGroup.setBounds(delayGroup.getRight() + 10, y, outputGroup.getX() - delayGroup.getRight() - 20, height);
 
-    delayTimeKnob.setTopLeftPosition(20, 20);
-    mixKnob.setTopLeftPosition(20, 20);
-    gainKnob.setTopLeftPosition(mixKnob.getX(), mixKnob.getBottom() + 10);
+    // position the knobs inside the groups
+    delayTimeKnob.setTopLeftPosition(20, 20); // relative to the top left of the UI group created
+    mixKnob.setTopLeftPosition(20, 20); // relative to the top left of the UI group created
+    gainKnob.setTopLeftPosition(mixKnob.getX(), mixKnob.getBottom() + 10); // relative to the top left of the UI group created
+    feedbackKnob.setTopLeftPosition(20, 20); // relative to the top left of the UI group created
 }
