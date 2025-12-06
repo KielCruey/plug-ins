@@ -8,7 +8,10 @@ DelayAudioProcessor::DelayAudioProcessor()
             .withInput("Input", juce::AudioChannelSet::stereo(), true)
             .withOutput ("Output", juce::AudioChannelSet::stereo(), true)),
     params(apvts)
-{ }
+{
+    feedbackL = 0.0f;
+    feedbackR = 0.0f;
+}
 
 DelayAudioProcessor::~DelayAudioProcessor()
 { }
@@ -133,8 +136,6 @@ void DelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     float* outputDataL = mainOutput.getWritePointer(channel::right);
     float* outputDataR = mainOutput.getWritePointer(isMainOutputStereo ? channel::left : channel::right);
     
-    
-
     if (isMainOutputStereo) {
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
             params.smoothen();
@@ -191,7 +192,6 @@ void DelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
             outputDataL[sample] = mix * params.gain;
         }
     }
-
 
     #if JUCE_DEBUG
         protectYourEars(buffer); // helps with too high of an output gain/volume

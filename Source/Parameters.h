@@ -12,6 +12,7 @@ class Parameters
 {
 public:
 	Parameters(juce::AudioProcessorValueTreeState& apvts);
+
 	static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
 	
 	void prepareToPlay(double sampleRate) noexcept;
@@ -30,12 +31,12 @@ public:
 	static constexpr float maxOutputGain = 12.0f;
 
 	// ======= variables =======
-	float gain = 0.0f;
-	float delayTime = 0.0f;
-	float mix = 1.0f; // 0-1 values only
-	float feedback = 0.0f;
-	float panL = 0.0f;
-	float panR = 1.0f;
+	float gain;
+	float delayTime;
+	float mix;
+	float feedback;
+	float panL;
+	float panR;
 
 private:
 	float targetDelayTime = 0.0f; // value that the one-pole filter is trying to reach

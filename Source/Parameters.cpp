@@ -10,6 +10,15 @@ static void Parameters::castParameter(juce::AudioProcessorValueTreeState& apvts,
 }
 
 Parameters::Parameters(juce::AudioProcessorValueTreeState& apvts) {
+    // initialize variables
+    gain = 0.0f;
+    delayTime = 0.0f;
+    mix = 1.0f; // 0-1 values only
+    feedback = 0.0f;
+    panL = 0.0f;
+    panR = 1.0f;
+
+    // grabbing parameter from apvts
     castParameter(apvts, gainParamID, gainParam);
     castParameter(apvts, delayTimeParamID, delayTimeParam);
     castParameter(apvts, mixParamID, mixParam);
@@ -17,6 +26,7 @@ Parameters::Parameters(juce::AudioProcessorValueTreeState& apvts) {
     castParameter(apvts, stereoParamID, stereoParam);
 }
 
+// adds the given parameter to the juce framework
 juce::AudioProcessorValueTreeState::ParameterLayout Parameters::createParameterLayout() {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
 

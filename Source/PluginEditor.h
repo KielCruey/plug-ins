@@ -20,13 +20,14 @@ private:
     DelayAudioProcessor& audioProcessor; // reference to processor object
     MainLookAndFeel mainLF;
 
-    // this connects the UI slider to the 'gain' backend parameter
+    // this connects the UI sliders to the backend parameters in the apvts
     RotaryKnob gainKnob{ "Gain", audioProcessor.apvts, gainParamID, true };
     RotaryKnob mixKnob{ "Mix", audioProcessor.apvts, mixParamID };
     RotaryKnob delayTimeKnob{ "Time", audioProcessor.apvts, delayTimeParamID };
     RotaryKnob feedbackKnob{ "Feedback", audioProcessor.apvts, feedbackParamID, true };
     RotaryKnob stereoKnob{ "Stereo", audioProcessor.apvts, stereoParamID, true };
 
+    // UI group for the knobs
     juce::GroupComponent delayGroup, feedbackGroup, outputGroup;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DelayAudioProcessorEditor)
