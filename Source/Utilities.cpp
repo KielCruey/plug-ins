@@ -31,3 +31,20 @@ float millisecondsFromString(const juce::String& text) {
 
     return value;
 }
+
+juce::String stringFromHz(float value, int) {
+    if (value < 1000.0f)
+        return juce::String(int(value)) + " Hz";
+    else if (value < 10000.0f)
+        return juce::String(value / 1000.0f, 2) + " k";
+    else
+        return juce::String(value / 1000.0f, 1) + " k";
+}
+
+float hzFromString(const juce::String& str) {
+    float value = str.getFloatValue();
+    if (value < 20.0f) 
+        return value * 1000.0f;
+
+    return value;
+}

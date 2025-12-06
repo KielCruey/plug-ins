@@ -17,6 +17,11 @@ Parameters::Parameters(juce::AudioProcessorValueTreeState& apvts) {
     feedback = 0.0f;
     panL = 0.0f;
     panR = 1.0f;
+    lowCut = 20.0f;
+    highCut = 20000.0f;
+
+    targetDelayTime = 0.0f;
+    coeff = 0.0f;
 
     // grabbing parameter from apvts
     castParameter(apvts, gainParamID, gainParam);
@@ -24,6 +29,8 @@ Parameters::Parameters(juce::AudioProcessorValueTreeState& apvts) {
     castParameter(apvts, mixParamID, mixParam);
     castParameter(apvts, feedbackParamID, feedbackParam);
     castParameter(apvts, stereoParamID, stereoParam);
+    castParameter(apvts, lowCutParamID, lowCutParam);
+    castParameter(apvts, highCutParamID, highCutParam);
 }
 
 // adds the given parameter to the juce framework
@@ -73,7 +80,27 @@ juce::AudioProcessorValueTreeState::ParameterLayout Parameters::createParameterL
         juce::NormalisableRange<float>(-100.0f, 100.0f, 1.0f),
         0.0f,
         juce::AudioParameterFloatAttributes()
-        .withStringFromValueFunction(stringFromPercent)
+            .withStringFromValueFunction(stringFromPercent)
+    ));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        lowCutParamID,
+        "Low Cut",
+        juce::NormalisableRange<float>(20.0f, 20000.0f, 1.0f, 0.3f),
+        20.0f,
+        juce::AudioParameterFloatAttributes()
+            .withStringFromValueFunction(stringFromHz)
+            .withValueFromStringFunction(hzFromString)
+    ));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        highCutParamID,
+        "High Cut",
+        juce::NormalisableRange<float>(20.0f, 20000.0f, 1.0f, 0.3f),
+        20000.0f,
+        juce::AudioParameterFloatAttributes()
+            .withStringFromValueFunction(stringFromHz)
+            .withValueFromStringFunction(hzFromString)
     ));
 
     return layout;
@@ -88,6 +115,8 @@ void Parameters::prepareToPlay(double sampleRate) noexcept {
     gainSmoother.reset(sampleRate, duration);
     mixSmoother.reset(sampleRate, duration);
     stereoSmoother.reset(sampleRate, duration);
+    lowCutSmoother.reset(sampleRate, duration);
+    highCutSmoother.reset(sampleRate, duration);
 }
 
 void Parameters::reset() noexcept {
@@ -97,11 +126,15 @@ void Parameters::reset() noexcept {
     feedback = 0.0f;
     panL = 0.0f;
     panR = 1.0f;
+    lowCut = 20.0f;
+    highCut = 20000.0f;
 
     gainSmoother.setCurrentAndTargetValue(juce::Decibels::decibelsToGain(gainParam->get()));
     mixSmoother.setCurrentAndTargetValue(mixParam->get() * 0.01f); // converts 100% to 1 and 0% to 0.0 for example
     feedbackSmoother.setCurrentAndTargetValue(feedbackParam->get() * 0.01f);
     stereoSmoother.setCurrentAndTargetValue(stereoParam->get() * 0.01f);
+    lowCutSmoother.setCurrentAndTargetValue(stereoParam->get());
+    highCutSmoother.setCurrentAndTargetValue(stereoParam->get());
 }
 
 void Parameters::update() noexcept {
@@ -114,6 +147,8 @@ void Parameters::update() noexcept {
     mixSmoother.setTargetValue(mixParam->get() * 0.01f);
     feedbackSmoother.setTargetValue(mixParam->get() * 0.01f);
     stereoSmoother.setTargetValue(stereoParam->get() * 0.01f);
+    lowCutSmoother.setTargetValue(stereoParam->get());
+    highCutSmoother.setTargetValue(stereoParam->get());
 }
 
 void Parameters::smoothen() noexcept {
@@ -125,4 +160,7 @@ void Parameters::smoothen() noexcept {
     feedback = feedbackSmoother.getNextValue();
 
     panningEqualPower(stereoSmoother.getNextValue(), panL, panR);
+
+    lowCut = lowCutSmoother.getNextValue();
+    highCut = highCutSmoother.getNextValue();
 }
