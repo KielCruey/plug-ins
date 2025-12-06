@@ -7,6 +7,8 @@ const juce::ParameterID delayTimeParamID{ "delayTime", 1 };
 const juce::ParameterID mixParamID{ "mix", 1 };
 const juce::ParameterID feedbackParamID{ "feedback", 1 };
 const juce::ParameterID stereoParamID{ "stereo", 1 };
+const juce::ParameterID lowCutParamID{ "lowCut", 1 };
+const juce::ParameterID highCutParamID{ "highCut", 1 };
 
 class Parameters
 {
@@ -37,20 +39,27 @@ public:
 	float feedback;
 	float panL;
 	float panR;
+	float lowCut;
+	float highCut;
 
 private:
-	float targetDelayTime = 0.0f; // value that the one-pole filter is trying to reach
-	float coeff = 0.0f; // one-pole smoothing -- how fast the smoothing happens
+	float targetDelayTime; // value that the one-pole filter is trying to reach
+	float coeff; // one-pole smoothing -- how fast the smoothing happens
 
 	juce::AudioParameterFloat* gainParam;
-	juce::AudioParameterFloat* delayTimeParam;
 	juce::AudioParameterFloat* mixParam;
 	juce::AudioParameterFloat* feedbackParam;
 	juce::AudioParameterFloat* stereoParam;
+	juce::AudioParameterFloat* lowCutParam;
+	juce::AudioParameterFloat* highCutParam;
+
+	juce::AudioParameterFloat* delayTimeParam;
 
 	// smoothing helps prevent audio clicks
 	juce::LinearSmoothedValue<float> gainSmoother; 
 	juce::LinearSmoothedValue<float> mixSmoother;
 	juce::LinearSmoothedValue<float> feedbackSmoother;
 	juce::LinearSmoothedValue<float> stereoSmoother;
+	juce::LinearSmoothedValue<float> lowCutSmoother;
+	juce::LinearSmoothedValue<float> highCutSmoother;
 };

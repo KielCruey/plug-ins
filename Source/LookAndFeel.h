@@ -8,13 +8,7 @@ namespace Colors
     const juce::Colour background{ 245, 240, 235 };
     const juce::Colour header{ 40, 40, 40 };
 
-    namespace Group
-    {
-        const juce::Colour label{ 160, 155, 150 };
-        const juce::Colour outline{ 235, 230, 225 };
-    }
-
-    namespace Knob 
+    namespace Knob
     {
         const juce::Colour trackBackground{ 205, 200, 195 };
         const juce::Colour trackActive{ 177, 101, 135 };
@@ -28,6 +22,12 @@ namespace Colors
         const juce::Colour value{ 240, 240, 240 };
         const juce::Colour caret{ 255, 255, 255 };
     }
+
+    namespace Group
+    {
+        const juce::Colour label{ 160, 155, 150 };
+        const juce::Colour outline{ 235, 230, 225 };
+    }
 }
 
 // ========== Fonts ==========
@@ -35,6 +35,7 @@ class Fonts
 {
 public:
     Fonts() = delete; // means you don't/can't create an instance of this class to use the function
+    
     static juce::Font getFont(float height = 16.0f);
 
 private:
@@ -72,14 +73,13 @@ private:
 class RotaryKnobLabel : public juce::Label
 {
 public:
-    RotaryKnobLabel() : juce::Label() {}
+    RotaryKnobLabel(); 
 
-    void mouseWheelMove(const juce::MouseEvent&, const juce::MouseWheelDetails&) override {};
+    void mouseWheelMove(const juce::MouseEvent&, const juce::MouseWheelDetails&) override;
 
     std::unique_ptr<juce::AccessibilityHandler> createAccessibilityHandler() override;
     juce::TextEditor* createEditorComponent() override;
 };
-
 
 // ========== MainLookAndFeel ==========
 class MainLookAndFeel : public juce::LookAndFeel_V4

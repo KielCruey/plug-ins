@@ -14,6 +14,8 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor (DelayAudioProcessor& p)
     feedbackGroup.setTextLabelPosition(juce::Justification::horizontallyCentred);
     feedbackGroup.addAndMakeVisible(feedbackKnob);
     feedbackGroup.addAndMakeVisible(stereoKnob);
+    feedbackGroup.addAndMakeVisible(lowCutKnob);
+    feedbackGroup.addAndMakeVisible(highCutKnob);
     addAndMakeVisible(feedbackGroup);
 
     outputGroup.setText("Output");
@@ -23,7 +25,7 @@ DelayAudioProcessorEditor::DelayAudioProcessorEditor (DelayAudioProcessor& p)
     addAndMakeVisible(outputGroup);
 
     // changing color
-    gainKnob.slider.setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::green);
+    //gainKnob.slider.setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::green);
 
     setSize (500, 330);
 
@@ -61,6 +63,7 @@ void DelayAudioProcessorEditor::resized() {
     int y = 50; // y position
     int height = bounds.getHeight() - 60;
 
+    // Position the groups
     delayGroup.setBounds(10, y, 110, height);
     outputGroup.setBounds(bounds.getWidth() - 160, y, 150, height);
     feedbackGroup.setBounds(delayGroup.getRight() + 10, y, outputGroup.getX() - delayGroup.getRight() - 20, height);
@@ -71,4 +74,6 @@ void DelayAudioProcessorEditor::resized() {
     gainKnob.setTopLeftPosition(mixKnob.getX(), mixKnob.getBottom() + 10); // relative to the top left of the UI group created
     feedbackKnob.setTopLeftPosition(20, 20); // relative to the top left of the UI group created
     stereoKnob.setTopLeftPosition(feedbackKnob.getRight() + 20, 20);
+    lowCutKnob.setTopLeftPosition(feedbackKnob.getX(), feedbackKnob.getBottom() + 10);
+    highCutKnob.setTopLeftPosition(lowCutKnob.getRight() + 20, lowCutKnob.getY());
 }

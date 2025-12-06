@@ -12,7 +12,6 @@
       <FILE id="SaK6vc" name="Noise.png" compile="0" resource="1" file="Source/Noise.png"/>
     </GROUP>
     <GROUP id="{753A5CE1-5C91-E498-F4F8-13959FDAF43E}" name="Source">
-      <FILE id="qBHPtP" name="DSP.cpp" compile="1" resource="0" file="Source/DSP.cpp"/>
       <FILE id="bS6uwT" name="DSP.h" compile="0" resource="0" file="Source/DSP.h"/>
       <FILE id="DShdk9" name="ProtectYourEars.h" compile="0" resource="0"
             file="Source/ProtectYourEars.h"/>

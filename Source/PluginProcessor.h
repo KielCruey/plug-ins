@@ -16,15 +16,17 @@ public:
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
-    juce::AudioProcessorEditor* createEditor() override;
 
     #ifndef JucePlugin_PreferredChannelConfigurations
         bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
     #endif
 
+    juce::AudioProcessorEditor* createEditor() override;
+    bool hasEditor() const override;
+
     void changeProgramName(int index, const juce::String& newName) override;
     double getTailLengthSeconds() const override;
-    bool hasEditor() const override;
+    
     bool acceptsMidi() const override;
     bool producesMidi() const override;
     bool isMidiEffect() const override;
@@ -47,10 +49,18 @@ public:
 private:
     Parameters params;
 
+    // note -- dsp object have state, reset them when needed
     juce::dsp::DelayLine<float, juce::dsp::DelayLineInterpolationTypes::Linear> delayLine;
-    
+
+    // StateVariableTPTFilter can be configured to high, low, or band pass filter
+    juce::dsp::StateVariableTPTFilter<float> lowCutFilter; 
+    juce::dsp::StateVariableTPTFilter<float> highCutFilter;
+
     float feedbackL;
     float feedbackR;
+
+    float lastLowCut;
+    float lastHighCut;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DelayAudioProcessor)
 };

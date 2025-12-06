@@ -5,3 +5,6 @@ juce::String stringFromMilliseconds(float value, int);
 juce::String stringFromDecibels(float value, int);
 juce::String stringFromPercent(float value, int);
 float millisecondsFromString(const juce::String& text);
+
+juce::String stringFromHz(float value, int);
+float hzFromString(const juce::String& str);

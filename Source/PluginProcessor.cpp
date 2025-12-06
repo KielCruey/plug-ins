@@ -9,8 +9,17 @@ DelayAudioProcessor::DelayAudioProcessor()
             .withOutput ("Output", juce::AudioChannelSet::stereo(), true)),
     params(apvts)
 {
+    // init vars
     feedbackL = 0.0f;
     feedbackR = 0.0f;
+
+    // -1.0f is off or a special value
+    lastLowCut = -1.0f;
+    lastHighCut = -1.0f;
+
+    // init filters -- opposite than expected types
+    lowCutFilter.setType(juce::dsp::StateVariableTPTFilterType::highpass);
+    highCutFilter.setType(juce::dsp::StateVariableTPTFilterType::lowpass);
 }
 
 DelayAudioProcessor::~DelayAudioProcessor()
@@ -80,7 +89,7 @@ void DelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 
     double numSamples = Parameters::maxDelayTime / 1000.0f * sampleRate;
     // number of samples must be twice as large to prevent the plugin from crashing
-    int maxDelayInSamples = int(std::ceil(numSamples) * 2); // if remainder, then round up
+    int maxDelayInSamples = int(std::ceil(numSamples));
     delayLine.setMaximumDelayInSamples(maxDelayInSamples);
     delayLine.reset();
 
@@ -89,6 +98,15 @@ void DelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
     // resets feedback
     feedbackL = 0.0f;
     feedbackR = 0.0f;
+    
+    lowCutFilter.prepare(spec);
+    highCutFilter.prepare(spec);
+    
+    lowCutFilter.reset();
+    highCutFilter.reset();
+
+    lastLowCut = -1.0f;
+    lastHighCut = -1.0f;
 }
 
 void DelayAudioProcessor::releaseResources() {
@@ -136,61 +154,57 @@ void DelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     float* outputDataL = mainOutput.getWritePointer(channel::right);
     float* outputDataR = mainOutput.getWritePointer(isMainOutputStereo ? channel::left : channel::right);
     
-    if (isMainOutputStereo) {
-        for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
-            params.smoothen();
+    for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
+        params.smoothen();
 
-            float delayInSamples = params.delayTime / 1000.0f * sampleRate;
-            delayLine.setDelay(delayInSamples);
+        float delayInSamples = params.delayTime / 1000.0f * sampleRate;
+        delayLine.setDelay(delayInSamples);
 
-            // reading input samples --  x[n]
-            float dryL = inputDataL[sample];
-            float dryR = inputDataR[sample];
-
-            float mono = (dryL + dryR) * 0.5f; // convert stereo to mono
-
-            // insert into delay line -- z^(-N)
-            //delayLine.pushSample(channel::left, dryL + feedbackL);
-            //delayLine.pushSample(channel::right, dryR + feedbackR);
-
-            // insert into delay line -- ping pong delay -- z^(-N)
-            delayLine.pushSample(channel::left, mono * params.panL + feedbackR);
-            delayLine.pushSample(channel::right, mono * params.panR + feedbackL);
-
-            float wetL = delayLine.popSample(channel::left);
-            float wetR = delayLine.popSample(channel::right);
-
-            // multi-tap delay
-            //wetL += delayLine.popSample(0, delayInSamples * 2.0f, false) * 0.7f;
-            //wetR += delayLine.popSample(1, delayInSamples * 2.0f, false) * 0.7f;
-
-            feedbackL = wetL * params.feedback;
-            feedbackR = wetR * params.feedback;
-
-            float mixL = dryL + wetL * params.mix;
-            float mixR = dryR + wetR * params.mix;
-
-            // output -- y[n]
-            outputDataL[sample] = mixL * params.gain;
-            outputDataR[sample] = mixR * params.gain;
+        // new value changes only if last value changes
+        if (params.lowCut != lastLowCut) {
+            lowCutFilter.setCutoffFrequency(params.lowCut);
+            lastLowCut = params.lowCut;
         }
-    }
-    else { 
-        for (int sample = 0; sample < buffer.getNumSamples(); ++sample) {
-            params.smoothen();
 
-            float delayInSamples = params.delayTime / 1000.0f * sampleRate;
-            delayLine.setDelay(delayInSamples);
-
-            float dry = inputDataL[sample];
-            delayLine.pushSample(channel::left, dry + feedbackL);
-            
-            float wet = delayLine.popSample(channel::left);
-            feedbackL = wet * params.feedback;
-
-            float mix = dry + wet * params.mix;
-            outputDataL[sample] = mix * params.gain;
+        // new value changes only if last value changes
+        if (params.highCut != lastHighCut) {
+            highCutFilter.setCutoffFrequency(params.highCut);
+            lastHighCut = params.highCut;
         }
+
+        // reading input samples --  x[n]
+        float dryL = inputDataL[sample];
+        float dryR = inputDataR[sample];
+
+        float mono = (dryL + dryR) * 0.5f; // convert stereo to mono
+
+        // insert into delay line -- ping pong delay -- z^(-N)
+        delayLine.pushSample(channel::left, mono * params.panL + feedbackR);
+        delayLine.pushSample(channel::right, mono * params.panR + feedbackL);
+
+        float wetL = delayLine.popSample(channel::left);
+        float wetR = delayLine.popSample(channel::right);
+
+        // multi-tap delay
+        //wetL += delayLine.popSample(channel::left, delayInSamples * 2.0f, false) * 0.7f;
+        //wetR += delayLine.popSample(channel::right, delayInSamples * 2.0f, false) * 0.7f;
+
+        feedbackL = wetL * params.feedback;
+        // filter left channel
+        feedbackL = lowCutFilter.processSample(channel::left, feedbackL);
+        feedbackL = highCutFilter.processSample(channel::left, feedbackL);
+
+        feedbackR = wetR * params.feedback;
+        // filter left channel
+        feedbackR = lowCutFilter.processSample(channel::right, feedbackR);
+        feedbackR = highCutFilter.processSample(channel::right, feedbackR);
+
+        float mixL = dryL + wetL * params.mix;
+        float mixR = dryR + wetR * params.mix;
+
+        // output -- y[n]
+        outputDataL[sample] = mixL * params.gain;
+        outputDataR[sample] = mixR * params.gain;
     }
 
     #if JUCE_DEBUG
@@ -207,8 +221,9 @@ juce::AudioProcessorEditor* DelayAudioProcessor::createEditor() {
 }
 
 void DelayAudioProcessor::getStateInformation (juce::MemoryBlock& destData) {
-    DBG(apvts.copyState().toXmlString());
     copyXmlToBinary(*apvts.copyState().createXml(), destData);
+
+    // DBG(apvts.copyState().toXmlString());
 }
 
 void DelayAudioProcessor::setStateInformation (const void* data, int sizeInBytes) {

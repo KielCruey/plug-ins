@@ -5,11 +5,8 @@ const juce::Typeface::Ptr Fonts::typeface = juce::Typeface::createSystemTypeface
 	BinaryData::LatoMedium_ttf, BinaryData::LatoMedium_ttfSize);
 
 // ========== Fonts ==========
-// getting font info
 juce::Font Fonts::getFont(float height) {
-	return juce::FontOptions(typeface)
-		.withMetricsKind(juce::TypefaceMetricsKind::legacy)
-		.withHeight(height);
+	return juce::Font(typeface).withHeight(height);
 }
 
 // ========== RotaryKnobLookAndFeel ==========
@@ -32,8 +29,8 @@ void RotaryKnobLookAndFeel::fillTextEditorBackground(
 void RotaryKnobLookAndFeel::drawRotarySlider(juce::Graphics& g,
 	int x, int y, 
 	int width, [[maybe_unused]]int height,
-	float sliderPos, float rotaryStartAngle,
-	float rotaryEndAngle, juce::Slider& slider)
+	float sliderPos, float rotaryStartAngle, float rotaryEndAngle,
+	juce::Slider& slider)
 {
 	auto bounds = juce::Rectangle<int>(x, y, width, width).toFloat();
 	auto knobRect = bounds.reduced(10.0f, 10.0f);
@@ -123,6 +120,13 @@ juce::Font MainLookAndFeel::getLabelFont([[maybe_unused]] juce::Label& label) {
 }
 
 // ========== RotaryKnobLabel ==========
+RotaryKnobLabel::RotaryKnobLabel()
+	: juce::Label()
+{ }
+
+void RotaryKnobLabel::mouseWheelMove(const juce::MouseEvent&, const juce::MouseWheelDetails&)
+{ }
+
 std::unique_ptr<juce::AccessibilityHandler> RotaryKnobLabel::createAccessibilityHandler() {
 	return createIgnoredAccessibilityHandler(*this);
 }
@@ -135,8 +139,6 @@ juce::TextEditor* RotaryKnobLabel::createEditorComponent() {
 	ed->setBorder(juce::BorderSize<int>());
 	ed->setIndents(2, 1);
 	ed->setJustification(juce::Justification::centredTop);
-	ed->setPopupMenuEnabled(false);
-	ed->setInputRestrictions(8);
 	ed->setPopupMenuEnabled(false);
 	ed->setInputRestrictions(8); // limit 8 characters max for the user input
 
