@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h> // can use namespace juce::
 
+// list of ID for all the working variables
 const juce::ParameterID gainParamID{ "gain", 1 };
 const juce::ParameterID delayTimeParamID{ "delayTime", 1 };
 const juce::ParameterID mixParamID{ "mix", 1 };
@@ -9,6 +10,8 @@ const juce::ParameterID feedbackParamID{ "feedback", 1 };
 const juce::ParameterID stereoParamID{ "stereo", 1 };
 const juce::ParameterID lowCutParamID{ "lowCut", 1 };
 const juce::ParameterID highCutParamID{ "highCut", 1 };
+const juce::ParameterID tempoSyncParamID{ "tempoSync", 1 };
+const juce::ParameterID delayNoteParamID{ "delayNote", 1 };
 
 class Parameters
 {
@@ -42,6 +45,9 @@ public:
 	float lowCut;
 	float highCut;
 
+	int delayNote;
+	bool tempoSync; // on/off state
+
 private:
 	float targetDelayTime; // value that the one-pole filter is trying to reach
 	float coeff; // one-pole smoothing -- how fast the smoothing happens
@@ -52,6 +58,9 @@ private:
 	juce::AudioParameterFloat* stereoParam;
 	juce::AudioParameterFloat* lowCutParam;
 	juce::AudioParameterFloat* highCutParam;
+
+	juce::AudioParameterBool* tempoSyncParam;
+	juce::AudioParameterChoice* delayNoteParam;
 
 	juce::AudioParameterFloat* delayTimeParam;
 
